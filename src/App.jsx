@@ -3,7 +3,7 @@ import GenButton from "./components/gen_button";
 import Options from "./components/options";
 import PassDisplay from "./components/pass_display";
 import PassStrength from "./components/pass_strength";
-import generatePassword from "./components/generatePassword";
+import generatePassword from "./utils/generatePassword";
 
 
 export default function App() {

@@ -1,0 +1,36 @@
+.gen-button {
+
+}
+.material-symbols-rounded {
+
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .gen-button {
+
+    }
+    .material-symbols-rounded {
+    
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .gen-button {
+
+    }
+    .material-symbols-rounded {
+    
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    .gen-button {
+
+    }
+    .material-symbols-rounded {
+    
+    }
+}

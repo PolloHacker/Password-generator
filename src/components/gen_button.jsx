@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 export default function GenButton({ onGenerate }) {
     return (
         <div>
-            <button onClick={onGenerate}>
+            <button className="gen-button" onClick={onGenerate}>
                 Generate
                 <span className="material-symbols-rounded">
                     arrow_forward
