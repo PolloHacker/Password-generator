@@ -1,0 +1,24 @@
+.option {
+
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+    .option {
+
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .option {
+
+    }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+    .option {
+
+    }
+}
