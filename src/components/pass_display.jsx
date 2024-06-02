@@ -1,10 +1,20 @@
-export default function PassDisplay() {
+import PropTypes from 'prop-types';
+
+export default function PassDisplay({ password }) {
+    const handleCopyPassword = () => {
+        navigator.clipboard.writeText(password)
+    };
+
     return (
         <div>
-            <span>PTx1f5DaFX</span>
-            <span className="material-symbols-rounded">
+            <span>{password}</span>
+            <span className="material-symbols-rounded" onClick={handleCopyPassword}>
                 file_copy
             </span>
         </div>
-    )
+    );
 }
+
+PassDisplay.propTypes = {
+    password: PropTypes.string.isRequired,
+};
