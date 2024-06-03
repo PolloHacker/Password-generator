@@ -1,14 +1,29 @@
+import PropTypes from 'prop-types';
 
-
-export default function PassStrength() {
+export default function PassStrength({ strength }) {
+  const strengthLevel = ['Too Weak!', 'Weak', 'Medium', 'Strong'];
+  const indicatorClass = [
+    'strength-1',
+    'strength-2',
+    'strength-3',
+    'strength-4'
+  ];
+  
   return (
-    <div>
-      <span className="placeholder">Strength</span>
-      <span className="strength-text">Medium</span>
-      <div className="strength-bar" id="bar1">|_|</div>
-      <div className="strength-bar" id="bar2">|_|</div>
-      <div className="strength-bar" id="bar3">|_|</div>
-      <div className="strength-bar" id="bar4">|_|</div>
+    <div className="pass-strength">
+      <span>Strength</span>
+      <div className="strength-indicator-container">
+        <span id="strength-qual">{strengthLevel[strength - 1]}</span>
+        <div className="strength-indicator">
+          {indicatorClass.map((className, index) => (
+            <div key={index} className={`${strength >= index + 1 ? className : ''} indicator`}></div>
+          ))}
+        </div>
+      </div>
     </div>
-  )
+  );
 }
+
+PassStrength.propTypes = {
+  strength: PropTypes.string.isRequired,
+};

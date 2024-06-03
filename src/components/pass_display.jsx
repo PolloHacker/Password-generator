@@ -6,9 +6,9 @@ export default function PassDisplay({ password }) {
     };
 
     return (
-        <div>
-            <span>{password}</span>
-            <span className="material-symbols-rounded" onClick={handleCopyPassword}>
+        <div className="pass-display">
+            <span id="pass">{password}</span>
+            <span className="material-symbols-rounded file-copy" onClick={handleCopyPassword}>
                 file_copy
             </span>
         </div>
