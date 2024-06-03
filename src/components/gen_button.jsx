@@ -4,10 +4,12 @@ export default function GenButton({ onGenerate }) {
     return (
         <div>
             <button className="gen-button" onClick={onGenerate}>
-                Generate
-                <span className="material-symbols-rounded">
-                    arrow_forward
-                </span>
+                <div className="button-content">
+                    <span> Generate </span>
+                    <span className="material-symbols-rounded arrow-forward">
+                        arrow_forward
+                    </span>
+                </div>
             </button>
         </div>
     );
