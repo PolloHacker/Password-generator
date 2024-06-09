@@ -1,134 +1,76 @@
-import { useState } from "react";
 import './App.css';
-import GenButton from "./components/gen_button";
-import PassDisplay from "./components/pass_display";
-import PassStrength from "./components/pass_strength";
-import generatePassword from "./utils/generatePassword";
+import CalcButton from './components/button';
+import Form from './components/form';
+import DisplayResult from './components/result';
+import { useState } from 'react';
 
-export default function App() {
-  const [password, setPassword] = useState('P4$5W0rD!');
-  const [options, setOptions] = useState({
-    uppercase: true,
-    lowercase: true,
-    numbers: true,
-    symbols: false
-  });
-  const [passwordLength, setPasswordLength] = useState(0);
-  const [passwordStrength, setPasswordStrength] = useState(0);
+function App() {
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
+  const [day, setDay] = useState('');
 
-  const handleGeneratePassword = () => {
-    if(passwordLength != 0) {
-      const strength = Object.values(options).filter(value => value === true).length;
-      setPasswordStrength(strength);
-    
+  const [years, setYears] = useState('--');
+  const [months, setMonths] = useState('--');
+  const [days, setDays] = useState('--');
 
-      const strength_qual = document.getElementById('strength-qual');
-      strength_qual.style.display = 'block';
-      strength_qual.style.fontSize = '18px';
-      strength_qual.style.color = '#fff';
+  function handleDateChange() {
+    const today = new Date();
+    const birth = new Date(year, month - 1, day);
 
-      const password = document.getElementById('pass');
-      password.style.color = '#fff';
+    let flag = true;
+    const lastDayOfMonth = new Date(birth.getFullYear(), birth.getMonth() + 1, 0).getDate();
 
-      const newPassword = generatePassword(passwordLength, options);
-      setPassword(newPassword);
+    if (year < 1 || year > today.getFullYear()) {
+      flag = false;
     }
-  };
+    if (month < 1 || month > 12) {
+      flag = false;
+    }
+    if (day < 1 || day > lastDayOfMonth) {
+      flag = false;
+    }
 
-  const handleOptionsChange = (e) => {
-    const { name, checked } = e.target;
-    setOptions({
-      ...options,
-      [name]: checked
-    });
-  };
+    if (flag) {
+      let y = today.getFullYear() - birth.getFullYear();
+      let m = today.getMonth() - birth.getMonth();
+      let d = today.getDate() - birth.getDate();
 
-  const handlePasswordLengthChange = (e) => {
-    setPasswordLength(e.target.value);
-    updateBackground(e.target.value);
-  };
+      if (d < 0) {
+        m -= 1;
+        d += new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+      }
 
-  const handleCopyPassword = () => {
-    navigator.clipboard.writeText(password);
-  };
+      if (m < 0) {
+        y -= 1;
+        m += 12;
+      }
 
-  const updateBackground = (length) => {
-    const range = document.getElementById('rangeInput');
-    const min = range.min;
-    const max = range.max;
-    const percentage = ((length - min) / (max - min)) * 100;
-    range.style.background = `linear-gradient(to right, #a4ffaf ${percentage}%, #18171f ${percentage}%)`;
-  };
+      setYears(y);
+      setMonths(m);
+      setDays(d);
+
+      return;
+    }
+
+    setYears('--');
+    setMonths('--');
+    setDays('--');
+  }
 
   return (
-    <div className='app-wrapper'>
-      <div className='app-title'>Password Generator</div>
-      <div className='app-container'>
-        <div className='password-container'>
-          <PassDisplay password={password} onCopy={handleCopyPassword} />
-        </div>
-        <div className='main-container'>
-          <div className='options'>
-            
-            <div className='password-length'>
+    <div className="App">
+      <div className="input-area">
+        <Form setYear={setYear} setMonth={setMonth} setDay={setDay} />
+      </div>
+      <div className="calculate-button">
+        <CalcButton handleDateChange={handleDateChange} />
+      </div>
 
-            <div className='aditional'>
-              <div className='title-password-length'><label className="slider-label">Character Length</label></div>
-               <div className="length">
-                <label>{passwordLength}</label>
-                </div>
-                </div>
-              <input 
-                id="rangeInput"
-                type="range" 
-                min="0" 
-                max="20" 
-                value={passwordLength} 
-                onChange={handlePasswordLengthChange} 
-              />
-            </div>
-
-            <label>
-              <input 
-                type="checkbox" 
-                name="uppercase" 
-                checked={options.uppercase} 
-                onChange={handleOptionsChange} 
-              />
-              Include Uppercase Letters
-            </label>
-            <label>
-              <input 
-                type="checkbox" 
-                name="lowercase" 
-                checked={options.lowercase} 
-                onChange={handleOptionsChange} 
-              />
-              Include Lowercase Letters
-            </label>
-            <label>
-              <input 
-                type="checkbox" 
-                name="numbers" 
-                checked={options.numbers} 
-                onChange={handleOptionsChange} 
-              />
-              Include Numbers
-            </label>
-            <label>
-              <input 
-                type="checkbox" 
-                name="symbols" 
-                checked={options.symbols} 
-                onChange={handleOptionsChange} 
-              />
-              Include Symbols
-            </label>
-          </div>
-          <PassStrength  strength={passwordStrength}/>
-          <GenButton onGenerate={handleGeneratePassword} />
-        </div>
+      <div className="display-area">
+        <DisplayResult years={years.toString()} months={months.toString()} days={days.toString()} />
       </div>
     </div>
   );
 }
+
+export default App;
